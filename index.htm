@@ -30,38 +30,41 @@
                     <a href="http://xkcd.com/936/"><img src="http://imgs.xkcd.com/comics/password_strength.png" width="476" height="387" class="img-thumbnail"></a>
                     
                     <h3>Configuration</h3>
-                    <form class="form-horizontal" role="form" name="mainForm">
+                    <form class="form-horizontal"  role="form" name="mainForm">
                         
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="num">Number of Words:</label>
                             <div class="col-sm-1 input-sm">
-                                <input type="text" ng-model="num" class="form-control" maxlength="1" /><br />
+                                <input type="text" ng-model="formData.num" class="form-control" maxlength="1" /><br />
                             </div>
-                            <div class="alert" ng-class="{ 'alert-warning' : num < 3 }" ng-show="num < 3">
-                                Must be a size between 3 and 9: {{ num }}
+                            <div class="alert" ng-class="{ 'alert-warning' : formData.num < 3 }" ng-show="formData.num < 3">
+                                Must be a size between 3 and 9: {{ formData.num }}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="breakage">Breakage:</label>
-                            <label class="radio-inline"><input type="radio" ng-model="breakage" value="spaces" />S p a c es</label>
-                            <label class="radio-inline"><input type="radio" ng-model="breakage" value="camelcase" />camelCase</label>
-                            <label class="radio-inline"><input type="radio" ng-model="breakage" value="hyphens" />H-y-p-h-e-n-s</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="spaces" />S p a c es</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="camelcase" />camelCase</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="hyphens" />H-y-p-h-e-n-s</label>
                         </div>
                         <div class="form-group">                            
                             <label class="control-label col-sm-2" for="case">Case:</label>
-                            <label class="radio-inline"><input type="radio" ng-model="case" value="upper" />UPPERCASE</label>
-                            <label class="radio-inline"><input type="radio" ng-model="case" value="lower" />lowercase</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="upper" />UPPERCASE</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="lower" />lowercase</label>
                         </div>                        
                         <div class="form-group">                            
                             <label class="control-label col-sm-2" for="case">Include:</label>
-                            <label class="checkbox-inline"><input type="checkbox" ng-model="number" value="">Number</label>
-                            <label class="checkbox-inline"><input type="checkbox" ng-model="specialsymbol" value="">Special Symbol</label>
+                            <label class="checkbox-inline"><input type="checkbox" ng-model="formData.number" value="">Number</label>
+                            <label class="checkbox-inline"><input type="checkbox" ng-model="formData.specialsymbol" value="">Special Symbol</label>
                         </div>
-                        <button type="submit" class="btn btn-primary" ng-click="go('/generate')">Generate</button>
+                        <button type="submit" class="btn btn-primary" ng-click="GeneratePassword()">Generate</button>
                     </form>
-                    
+                    {{ formData }}
+                    <br/>
+                    {{ data }}
                     <div class="container">
                         <div ng-view></div>
+                        {{ answer }}
                     </div>
                 </div>
                 <div class="panel-footer clearfix">
