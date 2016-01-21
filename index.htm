@@ -30,15 +30,14 @@
                     <a href="http://xkcd.com/936/"><img src="http://imgs.xkcd.com/comics/password_strength.png" width="476" height="387" class="img-thumbnail"></a>
                     
                     <h3>Configuration</h3>
-                    <form class="form-horizontal"  role="form" name="mainForm">
+                    
+                    <form class="form-horizontal"  role="form" name="mainForm" ng-submit="GeneratePassword()" novalidate>
                         
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="num">Number of Words:</label>
-                            <div class="col-sm-1 input-sm">
-                                <input type="text" ng-model="formData.num" class="form-control" maxlength="1" /><br />
-                            </div>
-                            <div class="alert" ng-class="{ 'alert-warning' : formData.num < 3 }" ng-show="formData.num < 3">
-                                Must be a size between 3 and 9: {{ formData.num }}
+                            <div class="col-sm-3 input-sm" ng-class="{ 'has-error' : formData.num < 3  }">
+                                <input type="number" name="num" ng-model="formData.num" class="form-control" maxlength="1" ng-pattern="/^\d*$/"/>
+                                <p ng-show="formData.num < 3" class="help-block">Please enter a number between 3 and 9</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -58,8 +57,9 @@
                             <label class="checkbox-inline"><input type="checkbox" ng-model="formData.number" value="">Number</label>
                             <label class="checkbox-inline"><input type="checkbox" ng-model="formData.specialsymbol" value="">Special Symbol</label>
                         </div>
-                        <button type="submit" class="btn btn-primary" ng-click="GeneratePassword()">Generate</button>
+                        <button type="submit" class="btn btn-primary"  ng-disabled="formData.num < 3">Generate</button>
                     </form>
+                    
                     </br>
                     {{ data }}
                     <div class="container">
