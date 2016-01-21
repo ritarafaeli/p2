@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="myApp">
+    <head>
+        <title>Margarita Rafaeli - XKCD Password Generator</title>
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <style>
+            html, body, input, select, textarea
+            {
+                font-size: 1.05em;
+            }
+        </style>
+        
+        <!-- angularjs -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.1/angular-route.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+        
+        <div class="panel panel-default">
+            
+                <div class="panel-heading">
+                    <h1>Margarita Rafaeli</h1>
+                    <p>Dynamic Web Applications | Spring 2016</p>
+                </div>
+                <div class="panel-body" ng-controller="mainController">
+                       
+                    <h3>xkcd Password Generator</h3>
+                    <a href="http://xkcd.com/936/"><img src="http://imgs.xkcd.com/comics/password_strength.png" width="476" height="387" class="img-thumbnail"></a>
+                    
+                    <h3>Configuration</h3>
+                    <form class="form-horizontal" role="form" name="mainForm">
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="num">Number of Words:</label>
+                            <div class="col-sm-1 input-sm">
+                                <input type="text" ng-model="num" class="form-control" maxlength="1" /><br />
+                            </div>
+                            <div class="alert" ng-class="{ 'alert-warning' : num < 3 }" ng-show="num < 3">
+                                Must be a size between 3 and 9: {{ num }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="breakage">Breakage:</label>
+                            <label class="radio-inline"><input type="radio" ng-model="breakage" value="spaces" />S p a c es</label>
+                            <label class="radio-inline"><input type="radio" ng-model="breakage" value="camelcase" />camelCase</label>
+                            <label class="radio-inline"><input type="radio" ng-model="breakage" value="hyphens" />H-y-p-h-e-n-s</label>
+                        </div>
+                        <div class="form-group">                            
+                            <label class="control-label col-sm-2" for="case">Case:</label>
+                            <label class="radio-inline"><input type="radio" ng-model="case" value="upper" />UPPERCASE</label>
+                            <label class="radio-inline"><input type="radio" ng-model="case" value="lower" />lowercase</label>
+                        </div>                        
+                        <div class="form-group">                            
+                            <label class="control-label col-sm-2" for="case">Include:</label>
+                            <label class="checkbox-inline"><input type="checkbox" ng-model="number" value="">Number</label>
+                            <label class="checkbox-inline"><input type="checkbox" ng-model="specialsymbol" value="">Special Symbol</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-click="go('/generate')">Generate</button>
+                    </form>
+                    
+                    <div class="container">
+                        <div ng-view></div>
+                    </div>
+                </div>
+                <div class="panel-footer clearfix">
+                    <div class="pull-right">                      
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="http://dwa15.com/Home"> DWA</a></li>
+                            <li><a href="https://laravel.com/"> Laravel</a></li>        
+                            <li><a href="https://angularjs.org/"> AngularJS</a></li>                    
+                        </ul>
+                    </div>
+                </div>
+		</div>
+
+    </body>
+</html>
