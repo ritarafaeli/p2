@@ -43,14 +43,15 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="breakage">Breakage:</label>
-                            <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="spaces" />S p a c es</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="spaces" />S p a c e s</label>
                             <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="camelcase" />camelCase</label>
                             <label class="radio-inline"><input type="radio" ng-model="formData.breakage" value="hyphens" />H-y-p-h-e-n-s</label>
                         </div>
                         <div class="form-group">                            
                             <label class="control-label col-sm-2" for="case">Case:</label>
-                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="upper" />UPPERCASE</label>
-                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="lower" />lowercase</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="default" ng-disabled="formData.breakage == 'camelcase' "/>Default</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="upper" ng-disabled="formData.breakage == 'camelcase' " />UPPERCASE</label>
+                            <label class="radio-inline"><input type="radio" ng-model="formData.case" value="lower" ng-disabled="formData.breakage == 'camelcase' "/>lowercase</label>
                         </div>                        
                         <div class="form-group">                            
                             <label class="control-label col-sm-2" for="case">Include:</label>
@@ -59,12 +60,10 @@
                         </div>
                         <button type="submit" class="btn btn-primary" ng-click="GeneratePassword()">Generate</button>
                     </form>
-                    {{ formData }}
-                    <br/>
+                    </br>
                     {{ data }}
                     <div class="container">
                         <div ng-view></div>
-                        {{ answer }}
                     </div>
                 </div>
                 <div class="panel-footer clearfix">
