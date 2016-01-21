@@ -18,19 +18,22 @@ myApp.controller('mainController', ['$scope', '$location', '$log', '$routeParams
         $location.path( hash );
     };
     
-    $scope.formData = {};
+    $scope.formData = {
+        case: 'default',
+        breakage: 'spaces',
+        num: 3
+    };
     $scope.status = '';
-    $scope.data = {};
-    $scope.answer = '';
+    $scope.data;
+    
     
     $scope.GeneratePassword = function() {
         console.log('generating');
         
         $http.post('generate.php',$scope.formData)
         .success(function(data, status, headers, config) {
-            $scope.data = data;
-            $scope.answer = data.answer;
-            console.log('success: ' + data);
+            $scope.data = data;            
+            console.log('success: ' + $scope.data);
         }).error(function(data, status, headers, config) {
             $scope.status = status;
             console.log('failure: ' + status);
@@ -39,15 +42,3 @@ myApp.controller('mainController', ['$scope', '$location', '$log', '$routeParams
     }
     
 }]);
-
-    /*$http({
-        url: "generate.php",
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            data: $.param({num:app.num, breakage:app.breakage, case:app.case, number:app.number, specialSymbol:app.specialsymbol})
-            // data: {'num':$scope.formData.num, 'breakage':$scope.formData.breakage, 'case':$scope.formData.case, 'number':$scope.formData.number, 'specialSymbol':$scope.formData.specialsymbol}        
-    }).success(function(data, status, headers, config) {
-        $scope.data = data;
-    }).error(function(data, status, headers, config) {
-        $scope.status = status;
-    });*/
