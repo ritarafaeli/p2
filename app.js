@@ -26,6 +26,9 @@ myApp.controller('mainController', ['$scope', '$location', '$log', '$routeParams
     $scope.status = '';
     $scope.data;
     
+    $scope.showErrorOnNumberInput = function() {
+        return  $scope.formData.num>9 || $scope.formData.num<3;
+    }
     
     $scope.GeneratePassword = function() {
         console.log('generating');
