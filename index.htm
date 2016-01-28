@@ -35,9 +35,9 @@
                         
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="num">Number of Words:</label>
-                            <div class="col-sm-3 input-sm" ng-class="{ 'has-error' : formData.num < 3  }">
-                                <input type="number" name="num" ng-model="formData.num" class="form-control" maxlength="1" ng-pattern="/^\d*$/"/>
-                                <p ng-show="formData.num < 3" class="help-block">Please enter a number between 3 and 9</p>
+                            <div class="col-sm-3 input-sm" ng-class="{ 'has-error' : formData.num > 9 || formData.num < 3 }">
+                                <input type="number" name="num" ng-model="formData.num" class="form-control" ng-pattern="/^\d*$/"/>
+                                <p ng-show="showErrorOnNumberInput()" class="help-block">Please enter a number between 3 and 9</p>
                             </div>
                         </div>
                         <div class="form-group">
