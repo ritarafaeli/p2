@@ -57,7 +57,7 @@
                             <label class="checkbox-inline"><input type="checkbox" ng-model="formData.number" value="">Number</label>
                             <label class="checkbox-inline"><input type="checkbox" ng-model="formData.specialsymbol" value="">Special Symbol</label>
                         </div>
-                        <button type="submit" class="btn btn-primary"  ng-disabled="formData.num < 3">Generate</button>
+                        <button type="submit" class="btn btn-primary"  ng-disabled="formData.num < 3 || formData.num > 9">Generate</button>
                     </form>
                     
                     </br>
