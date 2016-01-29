@@ -30,16 +30,26 @@ function scrape(){
         //var_dump(curl_exec($ch));
         //var_dump(curl_getinfo($ch));
         //var_dump(curl_error($ch));
-        
+        //$html = '<html><ul><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li><li>test</li></ul></html>';
         //load dom, pull out all words in <li></li> tags
-        $dom = new simple_html_dom();
-        $dom->load($html);
-        $ul = $dom->find('ul',0);
-        foreach( $ul->find('li') as $li ){
-            $words[] = $li->plaintext;
+        
+        
+        $dom = new DOMDocument();
+        @$dom->loadHTML($html);
+        
+        
+        $lis = $dom->getElementsByTagName('li');
+
+        foreach ($lis as $li){
+            echo trim($li->nodeValue).",";
+            $words[] = $li->nodeValue;
         }
-    }
-    print_r(array_values($words));
+        echo "\n";    
+    } 
+        
+    
+    var_dump(array_values($words));
+        
 }
 
 scrape();
