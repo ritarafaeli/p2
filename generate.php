@@ -1,20 +1,23 @@
 <?php
 
 $data = array();
+$words = array();
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-//not working locally
+
 function scrape(){
     $PAGES_TO_SCRAPE = 15;
     $scrapeurlbegin = 'www.paulnoll.com/Books/Clear-English/words-'; //'http://www.paulnoll.com/Books/Clear-English/words-01-02-hundred.html'
     $scrapeurlend = '-hundred.html';     
     
     for($i=0 ; $i < $PAGES_TO_SCRAPE ; $i++){
+        //create url
         $val1 = 2*$i+1;
         $val2 = $val1 + 1;
         $url = $scrapeurlbegin . strval(sprintf("%02s", $val1)) . '-' . strval(sprintf("%02s", $val2)) . $scrapeurlend;
         
+        //use curl to request html from url
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -23,14 +26,23 @@ function scrape(){
         curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false );
         curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 2 );      
         
-        var_dump(curl_exec($ch));
-        var_dump(curl_getinfo($ch));
-        var_dump(curl_error($ch));
-
+        $html = curl_exec($ch);
+        //var_dump(curl_exec($ch));
+        //var_dump(curl_getinfo($ch));
+        //var_dump(curl_error($ch));
+        
+        //load dom, pull out all words in <li></li> tags
+        $dom = new simple_html_dom();
+        $dom->load($html);
+        $ul = $dom->find('ul',0);
+        foreach( $ul->find('li') as $li ){
+            $words[] = $li->plaintext;
+        }
     }
+    print_r(array_values($words));
 }
 
-scrape();//testing in dev env since not working locally
+scrape();
 
 //dictionary - TODO: replace with scraper
 $str = "On the other hand we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment so blinded by desire that they cannot foresee the pain and trouble that are bound to ensue and equal blame belongs to those who fail in their duty through weakness of will which is the same as saying through shrinking from toil and pain These cases are perfectly simple and easy to distinguish In a free hour when our power of choice is untrammelled and when nothing prevents our being able to do what we like best every pleasure is to be welcomed and every pain avoided But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures or else he endures pains to avoid worse pains";
