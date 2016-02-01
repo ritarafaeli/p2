@@ -21,14 +21,30 @@ myApp.controller('mainController', ['$scope', '$location', '$log', '$routeParams
     $scope.formData = {
         case: 'default',
         breakage: 'spaces',
-        num: 3
+        num: 3,
+        words: {}
     };
     $scope.status = '';
     $scope.data;
+    $scope.words;
     
     $scope.showErrorOnNumberInput = function() {
         return  $scope.formData.num>9 || $scope.formData.num<3;
     }
+    
+    $scope.scrapeWords = function() {
+        console.log('scraping words');
+        
+        $http.post('scrape.php','')
+        .success(function(data, status, headers, config) {
+            $scope.formData.words = data;          
+            console.log('success: ' + $scope.formData.words);
+        }).error(function(data, status, headers, config) {
+            $scope.status = status;
+            console.log('failure: ' + status);
+        });
+    }
+    
     
     $scope.GeneratePassword = function() {
         console.log('generating');
@@ -41,7 +57,6 @@ myApp.controller('mainController', ['$scope', '$location', '$log', '$routeParams
             $scope.status = status;
             console.log('failure: ' + status);
         });
-       //$scope.go('/generate');
     }
     
 }]);
