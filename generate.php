@@ -25,21 +25,22 @@ $case = $CASE_DEFAULT;
 $number = false;
 $specialsymbol = false;
 
-//set inputs
-if(!empty($_POST["num"]))
+//set inputs - form validation - if validation fails, set to default
+if(!empty($_POST["num"]) && is_int($_POST["num"]) && $_POST["num"] > 3 && $_POST["num"] < 10 )
     $num = $_POST["num"];
 
-if(!empty($_POST["breakage"]))
+if(!empty($_POST["breakage"]) && is_string($_POST["breakage"]))
     $breakage = $_POST['breakage'];
 
-if(!empty($_POST["case"]))
+if(!empty($_POST["case"]) && is_string($_POST["case"]))
    $case = $_POST['case'];
 
-if(!empty($_POST["number"]) && $_POST["number"]==1)
-   $number = true;
+if(!empty($_POST["number"]) && is_bool($_POST["number"]))
+   $number = $_POST["number"];
 
-if(!empty($_POST["specialsymbol"]) && $_POST["specialsymbol"]==1)
-   $specialsymbol = true;
+if(!empty($_POST["specialsymbol"]) && is_bool($_POST["specialsymbol"]==1))
+   $specialsymbol = $_POST["specialsymbol"];
+
 if(!empty($_POST['words'])){
     $scrapedwords = $_POST['words'];
     $dictionary = $scrapedwords;
