@@ -18,14 +18,14 @@ $CASE_UPPER = 'upper';
 $CASE_LOWER = 'lower';
 $CASE_DEFAULT = 'default';
 
-//form input defaults
+//form inputs - default values (will be updated upon server side validation)
 $num = 3;
 $breakage = $BREAKAGE_HYPHENS;
 $case = $CASE_DEFAULT;
-$number = false;
-$specialsymbol = false;
+$isNumber = false;
+$isSpecialsymbol = false;
 
-//set inputs - form validation - if validation fails, set to default
+//update form inputs - form validation - if validation fails, default values will be used
 if(!empty($_POST["num"]) && is_int($_POST["num"]) && $_POST["num"] > 3 && $_POST["num"] < 10 )
     $num = $_POST["num"];
 
@@ -36,10 +36,10 @@ if(!empty($_POST["case"]) && is_string($_POST["case"]))
    $case = $_POST['case'];
 
 if(!empty($_POST["number"]) && is_bool($_POST["number"]))
-   $number = $_POST["number"];
+   $isNumber = $_POST["number"];
 
 if(!empty($_POST["specialsymbol"]) && is_bool($_POST["specialsymbol"]==1))
-   $specialsymbol = $_POST["specialsymbol"];
+   $isSpecialsymbol = $_POST["specialsymbol"];
 
 if(!empty($_POST['words'])){
     $scrapedwords = $_POST['words'];
@@ -52,12 +52,22 @@ if(!empty($_POST['words'])){
 $answer = '';
 
 $break = $breakage == $BREAKAGE_SPACES ? " " : "-";
-for($i=0 ; $i < $num ; $i++){
-    $rand = rand(1, $size);
+
+$indexToAddNumber = $isNumber ? rand(1, $num) : -1; //if user wants to add a number, use random index
+$indexToAddSymbol = $isSpecialsymbol ? rand(1, $num) : -1; //if user wants to add symbol, use random index
+
+$symbolArray = array('!','@','#','$','%','^','&','*');
+
+for($i=0 ; $i < $num ; $i++){ //iterate through number of words needed for password
+    
+    $rand = rand(1, $size); //choose a random index
+    
     $word = ucfirst(strtolower($dictionary[$rand-1]));
+    
     if($case == $CASE_UPPER){
         $word = strtoupper($word);
-    }else if($case == $CASE_LOWER){
+    }
+    else if($case == $CASE_LOWER){
         $word = strtolower($word);
     }
    
@@ -66,16 +76,19 @@ for($i=0 ; $i < $num ; $i++){
         if($i > 0)
             $word = ucfirst($word);
     }
-    if($i==0 && $number)
+    
+    if($i==$indexToAddNumber-1)
         $answer .= rand(1,100);
-    $answer .= $word;    
+    
+    $answer .= $word;
+    
+    if($i==$indexToAddSymbol-1)
+        $answer .= $symbolArray[rand(1,sizeof($symbolArray))-1]; //choose a random symbol from symbolArray
     
     if($i != $num - 1 && $breakage != $BREAKAGE_CAMEL)
         $answer .= $break;
     
 }
-if($specialsymbol)
-    $answer .= '@';
 
 //return answer back to AngularJS
 echo $answer;
