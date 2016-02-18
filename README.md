@@ -6,7 +6,7 @@
 XKCD Password Generator (Project 2) uses basic php to scrape common English words from [paulnoll.com](http://www.paulnoll.com/Books/Clear-English/) and generates a password based on user configuration. For example, you can choose to generate a password using 5 words, all uppercase, and hyphenated, which gives you "GLASS-COACH-KEY-IMPROVE-REALIZE".
 
 ##Demo
-[screencast](http://screencast.com/t/e3Nuptqq)
+[screencast](http://screencast.com/t/h17N1NPzSLg)
 
 ##Details
 #### scrape.php
